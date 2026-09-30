@@ -994,6 +994,9 @@
       })
       .catch(() => { /* no-cors라 응답을 읽을 수 없어 에러도 조용히 무시합니다 */ })
       .finally(() => {
+        if (typeof gtag === 'function') {
+          gtag('event', 'generate_lead', { form_type: formType });
+        }
         wrap.innerHTML = DONE_HTML;
         messagesEl.scrollTop = messagesEl.scrollHeight;
         formState[stateKey] = false;
@@ -1041,6 +1044,10 @@
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify({ formType: 'chat', message: val })
     }).catch(() => { /* no-cors라 응답을 읽을 수 없어 에러도 조용히 무시합니다 */ });
+
+    if (typeof gtag === 'function') {
+      gtag('event', 'chat_message_sent');
+    }
 
     setTimeout(() => addMessage('감사합니다. 담당 매니저가 확인 후 빠르게 답변드릴게요.', 'bot'), 550);
   });

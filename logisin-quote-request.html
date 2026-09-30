@@ -589,6 +589,9 @@
     })
     .catch(() => { /* no-cors라 응답을 읽을 수 없어 에러도 조용히 무시합니다 */ })
     .finally(() => {
+      if (typeof gtag === 'function') {
+        gtag('event', 'generate_lead', { form_type: 'quote' });
+      }
       wrap.innerHTML = '<div style="text-align:center; padding:36px 10px;">' +
         '<div style="width:52px; height:52px; border-radius:50%; background:var(--kraft-dark); color:var(--white); display:flex; align-items:center; justify-content:center; font-size:1.4rem; margin:0 auto 18px;">✓</div>' +
         '<div style="font-size:1.05rem; font-weight:700; margin-bottom:8px;">요청이 접수되었습니다.</div>' +
