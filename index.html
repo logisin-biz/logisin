@@ -935,7 +935,6 @@
 
   const existingFormTemplate = document.getElementById('existingFormTemplate');
   const generalFormTemplate = document.getElementById('generalFormTemplate');
-  const formState = { quote: false, existing: false, general: false };
   const QUOTE_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyFKaCzc929zybMWArWCyR358aFTiOlC74IHWYCx0xwiMu8dm3H5Fr49RVIQR5MkB2R7g/exec';
   const DONE_HTML = '<div class="qf-done"><div class="qf-done-icon">✓</div><div class="qf-done-text">요청이 접수되었습니다.<br>담당자가 확인 후 연락드릴게요.</div></div>';
 
@@ -961,12 +960,6 @@
   }
 
   function openForm(stateKey, template, formType, followUpText){
-    if (formState[stateKey]) {
-      messagesEl.scrollTop = messagesEl.scrollHeight;
-      return;
-    }
-    formState[stateKey] = true;
-
     const node = template.content.cloneNode(true);
     const wrap = node.querySelector('.quote-form-wrap');
     messagesEl.appendChild(node);
@@ -999,7 +992,6 @@
         }
         wrap.innerHTML = DONE_HTML;
         messagesEl.scrollTop = messagesEl.scrollHeight;
-        formState[stateKey] = false;
         setTimeout(() => addMessage(followUpText, 'bot'), 400);
       });
     });
