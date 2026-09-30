@@ -469,7 +469,7 @@
         <p class="sub">도매 포장재 상담부터 제조사별 단가 비교, 합리적인 견적까지 한 번에 해결하세요.</p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="logisin-quote-request.html">맞춤 견적 요청하기</a>
-          <a class="link-arrow" href="#values">어떻게 진행되나요</a>
+          <a class="link-arrow" href="#steps">어떻게 진행되나요</a>
         </div>
         <p class="trust-line">평균 단가 절감 <span class="mono">10%</span> · 평균 회신 <span class="mono">1일</span> 이내</p>
       </div>
@@ -1020,6 +1020,14 @@
     if (!val) return;
     addMessage(val, 'user');
     input.value = '';
+
+    fetch(QUOTE_ENDPOINT, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ formType: 'chat', message: val })
+    }).catch(() => { /* no-cors라 응답을 읽을 수 없어 에러도 조용히 무시합니다 */ });
+
     setTimeout(() => addMessage('감사합니다. 담당 매니저가 확인 후 빠르게 답변드릴게요.', 'bot'), 550);
   });
 </script>
