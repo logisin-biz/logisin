@@ -448,6 +448,18 @@
     .chat-nav-item{display:flex; flex-direction:column; align-items:center; gap:4px; font-size:0.7rem; color:var(--steel);}
     .chat-nav-item.active{color:var(--ink); font-weight:600;}
   }
+
+  /* v6: 견적 폼 문턱 낮추기 */
+  .quote-form .qf-hint{ margin:8px 0 0; font-size:0.8rem; color:var(--steel); line-height:1.5; }
+  .quote-form .qf-hint a{ color:var(--kraft-dark); font-weight:600; }
+  .quote-form .qf-more{ margin-top:22px; border:1px solid var(--line); border-radius:8px; background:var(--paper-soft, #FAF8F4); }
+  .quote-form .qf-more > summary{ cursor:pointer; padding:14px 16px; font-size:0.9rem; font-weight:600; list-style:none; display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+  .quote-form .qf-more > summary::-webkit-details-marker{ display:none; }
+  .quote-form .qf-more > summary::before{ content:'+'; display:inline-flex; width:20px; height:20px; align-items:center; justify-content:center; border-radius:50%; border:1px solid var(--line); font-weight:700; font-size:0.85rem; color:var(--kraft-dark); }
+  .quote-form .qf-more[open] > summary::before{ content:'−'; }
+  .quote-form .qf-more-body{ padding:0 16px 18px; }
+  .quote-form .qf-more-body .qf-label:first-child{ margin-top:4px; }
+  .quote-form .qf-assure{ margin:12px 0 0; text-align:center; font-size:0.8rem; color:var(--steel); }
 </style>
 <meta name="description" content="필요한 포장재와 수량을 남겨주시면 제조사별 단가를 비교해 맞춤 견적을 회신드립니다. 연락처만 있어도 접수됩니다." />
 <link rel="canonical" href="https://logis-in.com/logisin-quote-request" />
@@ -475,7 +487,7 @@
     <div class="wrap" style="max-width:640px;">
       <p class="section-label" style="color:var(--tape);">견적 요청</p>
       <h1 style="font-size:clamp(1.5rem,3.2vw,2.1rem); font-weight:700; margin:0 0 12px; letter-spacing:-0.01em; line-height:1.35;">맞춤 견적 요청서</h1>
-      <p style="color:#C7CCD3; font-size:0.96rem; margin:0; line-height:1.6;">필요한 포장재와 조건을 남겨주시면, 여러 제조사를 비교해 가장 합리적인 단가로 정리된 견적을 보내드립니다.</p>
+      <p style="color:#C7CCD3; font-size:0.96rem; margin:0; line-height:1.6;">필요한 포장재와 연락처만 남겨주시면, 여러 제조사 단가를 비교해 정리한 견적을 평균 1일 이내에 보내드립니다.</p>
     </div>
   </section>
 
@@ -483,58 +495,62 @@
     <div class="wrap" style="max-width:640px;">
       <div id="qrWrap" class="quote-form-wrap" style="padding:30px 26px;">
         <form class="quote-form" id="qrForm">
-          <div class="qf-note">담당자명 · 연락처 · 납품처명만 필수이며, 나머지는 아는 만큼만 남겨주셔도 됩니다.</div>
+          <div class="qf-note">필요한 포장재와 연락처만 적어주시면 됩니다. 규격·수량은 아는 만큼만 적어주세요.</div>
 
-          <div class="qf-section">요청자 정보</div>
-          <label class="qf-label">담당자명 <span class="qf-req">*</span></label>
-          <input type="text" name="manager" required />
+          <div class="qf-section">필요한 포장재</div>
+          <label class="qf-label" for="qr-items">품목 · 규격 · 수량 <span class="qf-req">*</span></label>
+          <textarea id="qr-items" name="items" rows="4" required placeholder="예) 이중 골판지 박스 500×400×300 / 300개&#10;OPP 테이프 48mm×100m / 120롤&#10;규격을 모르면 &#39;택배박스 중간 크기, 월 1,000개&#39;처럼 적어도 됩니다"></textarea>
+          <p class="qf-hint">쓰고 계신 포장재 사진이 있다면 <a href="https://pf.kakao.com/_JxexixiX/chat" target="_blank" rel="noopener" data-track="quote_kakao_photo">카카오톡으로 사진만 보내셔도 됩니다 →</a></p>
 
-          <label class="qf-label">연락처 <span class="qf-req">*</span></label>
-          <input type="tel" name="phone" required placeholder="010-0000-0000" />
+          <div class="qf-section">연락받으실 분</div>
+          <label class="qf-label" for="qr-manager">담당자명 <span class="qf-req">*</span></label>
+          <input type="text" id="qr-manager" name="manager" required autocomplete="name" />
 
-          <label class="qf-label">회사명</label>
-          <input type="text" name="company" />
+          <label class="qf-label" for="qr-phone">연락처 <span class="qf-req">*</span></label>
+          <input type="tel" id="qr-phone" name="phone" required placeholder="010-0000-0000" autocomplete="tel" />
 
-          <label class="qf-label">직책</label>
-          <input type="text" name="position" />
+          <label class="qf-label" for="qr-company">회사명 <span class="qf-optional">(선택)</span></label>
+          <input type="text" id="qr-company" name="company" autocomplete="organization" />
 
-          <div class="qf-section">납품처 정보</div>
-          <label class="qf-label">납품처명 <span class="qf-req">*</span></label>
-          <input type="text" name="site" required placeholder="예: OO물류센터" />
+          <details class="qf-more">
+            <summary>추가 정보 입력 <span class="qf-optional">(선택 · 더 정확한 견적에 도움이 돼요)</span></summary>
+            <div class="qf-more-body">
+              <label class="qf-label">문의 목적</label>
+              <select name="purpose">
+                <option value="">선택해주세요</option>
+                <option value="구매">구매 — 지금 발주 예정이에요</option>
+                <option value="예산">예산 — 예산 검토 중이에요</option>
+                <option value="샘플">샘플 — 샘플을 먼저 받아보고 싶어요</option>
+              </select>
 
-          <div class="qf-section">요청 내용</div>
-          <label class="qf-label">필요 포장재 · 규격 · 재질 · 수량</label>
-          <textarea name="items" rows="3" placeholder="예: OPP 테이프 48mm×100m PP재질 120롤&#10;이중 골판지 박스 500×400×300 골판지 300개"></textarea>
+              <label class="qf-label">납품 희망일</label>
+              <input type="date" name="dueDate" />
 
-          <label class="qf-label">운반비 포함 여부</label>
-          <div class="qf-radio-row">
-            <label><input type="radio" name="shipping" value="포함" checked /> 포함</label>
-            <label><input type="radio" name="shipping" value="미포함" /> 미포함</label>
-          </div>
+              <label class="qf-label">운반비 포함 여부</label>
+              <div class="qf-radio-row">
+                <label><input type="radio" name="shipping" value="포함" checked /> 포함</label>
+                <label><input type="radio" name="shipping" value="미포함" /> 미포함</label>
+              </div>
 
-          <label class="qf-label">문의 목적</label>
-          <select name="purpose">
-            <option value="">선택해주세요</option>
-            <option value="구매">구매 — 지금 발주 예정이에요</option>
-            <option value="예산">예산 — 예산 검토 중이에요</option>
-            <option value="샘플">샘플 — 샘플을 먼저 받아보고 싶어요</option>
-          </select>
+              <label class="qf-label">납품처명</label>
+              <input type="text" name="site" placeholder="예: OO물류센터" />
 
-          <label class="qf-label">납품 희망일</label>
-          <input type="date" name="dueDate" />
+              <label class="qf-label">납품 주소</label>
+              <input type="text" name="address" placeholder="예: 경기 김포시 ..." />
 
-          <div class="qf-section">추가 정보 <span class="qf-optional">(선택)</span></div>
-          <label class="qf-label">기존 공급업체 · 제조처</label>
-          <input type="text" name="currentSupplier" placeholder="현재 거래 중인 업체가 있다면 알려주세요" />
+              <label class="qf-label">직책</label>
+              <input type="text" name="position" />
 
-          <label class="qf-label">현재 단가 또는 타겟가</label>
-          <input type="text" name="currentPrice" placeholder="예: 현재 단가 000원 (VAT 별도) 또는 타겟가 000원" />
+              <label class="qf-label">기존 공급업체 · 제조처</label>
+              <input type="text" name="currentSupplier" placeholder="현재 거래 중인 업체가 있다면 알려주세요" />
 
-          <label class="qf-label">납품 주소</label>
-          <input type="text" name="address" placeholder="예: 경기 김포시 ..." />
+              <label class="qf-label">현재 단가 또는 타겟가</label>
+              <input type="text" name="currentPrice" placeholder="예: 현재 단가 000원 (VAT 별도) 또는 타겟가 000원" />
 
-          <label class="qf-label">기타 요청사항</label>
-          <textarea name="etc" rows="2"></textarea>
+              <label class="qf-label">기타 요청사항</label>
+              <textarea name="etc" rows="2"></textarea>
+            </div>
+          </details>
 
           <label class="qf-checkbox-row">
             <input type="checkbox" name="agree" required />
@@ -542,7 +558,8 @@
           </label>
           <div class="qf-privacy-note">수집 항목: 담당자명·회사명·직책·연락처·납품처 정보 · 이용 목적: 견적 상담 및 견적서 발송 · 보유 기간: 관련 법령에 따름</div>
 
-          <button type="submit" class="qf-submit">견적요청 보내기</button>
+          <button type="submit" class="qf-submit">견적 요청 보내기</button>
+          <p class="qf-assure">견적 무료 · 거래 의무 없음 · 평균 1일 이내 회신</p>
         </form>
       </div>
     </div>
@@ -604,7 +621,7 @@
       wrap.innerHTML = '<div style="text-align:center; padding:36px 10px;">' +
         '<div style="width:52px; height:52px; border-radius:50%; background:var(--kraft-dark); color:var(--white); display:flex; align-items:center; justify-content:center; font-size:1.4rem; margin:0 auto 18px;">✓</div>' +
         '<div style="font-size:1.05rem; font-weight:700; margin-bottom:8px;">요청이 접수되었습니다.</div>' +
-        '<div style="font-size:0.92rem; color:var(--steel); line-height:1.6; margin-bottom:24px;">담당자가 확인 후 1~2 영업일 이내에 연락드릴게요.</div>' +
+        '<div style="font-size:0.92rem; color:var(--steel); line-height:1.6; margin-bottom:24px;">담당자가 확인 후 평균 1일 이내에 연락드릴게요.</div>' +
         '<a href="index.html" class="btn btn-primary">홈으로 돌아가기</a>' +
         '</div>';
       window.scrollTo({ top: 0, behavior: 'smooth' });
