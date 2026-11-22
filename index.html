@@ -1066,6 +1066,116 @@
   .process .process-grid.pg-3{grid-template-columns:repeat(3,1fr);}
   @media (max-width:980px){ .process .process-grid.pg-3{grid-template-columns:1fr;} }
 
+  /* ---------- v8: 서비스 페이지 — 견적 비교 안내 ---------- */
+  .s8-hero{background:var(--ink); color:#fff; padding:76px 0 72px; overflow:hidden;}
+  .s8-hero .wrap{display:grid; grid-template-columns:1.2fr 0.8fr; gap:48px; align-items:center;}
+  .s8-kicker{display:flex; align-items:center; gap:10px; margin:0 0 18px; font-size:0.92rem; font-weight:600; color:#9FB0C2;}
+  .s8-kicker b{color:var(--tape); font-weight:800;}
+  .s8-kicker i{width:1px; height:13px; background:rgba(255,255,255,0.25);}
+  .s8-hero h1{margin:0 0 18px; font-size:clamp(1.9rem, 3.6vw, 2.8rem); line-height:1.3; font-weight:800; letter-spacing:-0.035em; word-break:keep-all;}
+  .s8-hero h1 .hl{color:var(--tape);}
+  .s8-hero .s8-sub{margin:0; max-width:520px; font-size:1.04rem; line-height:1.65; color:#B9C2CC; word-break:keep-all;}
+  .s8-hero .cmp-card{justify-self:center;}
+  @media (max-width:900px){
+    .s8-hero{padding:52px 0 48px;}
+    .s8-hero .wrap{grid-template-columns:1fr;}
+    .s8-hero .cmp-card{display:none;}
+  }
+
+  .s8-band{background:#fff; border-bottom:1px solid var(--line-soft); padding:0 !important;}
+  .s8-band ul{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(3,1fr);}
+  .s8-band li{padding:24px 16px; text-align:center; border-left:1px solid var(--line-soft);}
+  .s8-band li:first-child{border-left:none;}
+  .s8-band strong{display:block; font-size:1.25rem; font-weight:800; letter-spacing:-0.03em; color:var(--ink);}
+  .s8-band span{display:block; margin-top:4px; font-size:0.84rem; color:var(--steel);}
+  @media (max-width:640px){ .s8-band li{padding:18px 6px;} .s8-band strong{font-size:1.05rem;} .s8-band span{font-size:0.74rem;} }
+
+  .s8-sec{padding:88px 0;}
+  .s8-sec.alt{background:var(--paper-soft);}
+  .s8-head{max-width:640px; margin:0 0 40px;}
+  .s8-head.center{margin:0 auto 40px; text-align:center;}
+  .s8-head .section-label{margin:0 0 10px;}
+  .s8-head h2{margin:0 0 12px; font-size:clamp(1.45rem, 2.6vw, 2rem); line-height:1.35; font-weight:800; letter-spacing:-0.03em; word-break:keep-all;}
+  .s8-head p{margin:0; font-size:0.98rem; line-height:1.7; color:var(--steel); word-break:keep-all;}
+  @media (max-width:640px){ .s8-sec{padding:60px 0;} .s8-head{margin-bottom:28px;} }
+
+  /* 3단계 */
+  .s8-steps{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; counter-reset:s8;}
+  .s8-step{background:#fff; border:1px solid var(--line-soft); border-radius:16px; padding:26px 24px 24px; box-shadow:0 1px 2px rgba(13,33,57,0.04), 0 12px 28px -20px rgba(13,33,57,0.25);}
+  .s8-step-top{display:flex; align-items:center; justify-content:space-between; margin-bottom:18px;}
+  .s8-num{width:34px; height:34px; border-radius:50%; background:var(--kraft-dark); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.9rem;}
+  .s8-chip{font-size:0.74rem; font-weight:700; color:var(--kraft-dark); background:#FBEDE0; padding:4px 10px; border-radius:99px;}
+  .s8-step h3{margin:0 0 8px; font-size:1.12rem; font-weight:800; letter-spacing:-0.02em;}
+  .s8-step p{margin:0; font-size:0.9rem; line-height:1.65; color:var(--steel); word-break:keep-all;}
+  .s8-mini{margin-top:18px; padding-top:16px; border-top:1px dashed var(--line); display:flex; flex-wrap:wrap; gap:6px;}
+  .s8-mini span{font-size:0.74rem; font-weight:600; color:var(--ink-soft); background:var(--paper-soft); border-radius:99px; padding:4px 10px;}
+  @media (max-width:900px){ .s8-steps{grid-template-columns:1fr;} }
+
+  /* 비교표 예시 */
+  .s8-compare{display:grid; grid-template-columns:0.9fr 1.1fr; gap:48px; align-items:center;}
+  .s8-points{list-style:none; margin:24px 0 0; padding:0; display:flex; flex-direction:column; gap:14px;}
+  .s8-points li{display:flex; gap:12px; align-items:flex-start; font-size:0.94rem; line-height:1.6; color:var(--ink); word-break:keep-all;}
+  .s8-points li::before{content:'✓'; flex:none; width:22px; height:22px; margin-top:1px; border-radius:50%; background:var(--kraft-dark); color:#fff; display:flex; align-items:center; justify-content:center; font-size:0.72rem; font-weight:700;}
+  .s8-points small{display:block; color:var(--steel); font-size:0.84rem;}
+  .s8-table{background:#fff; border:1px solid var(--line-soft); border-radius:16px; padding:22px; box-shadow:0 30px 60px -36px rgba(13,33,57,0.35);}
+  .s8-table-head{display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:14px;}
+  .s8-table-head strong{display:block; font-size:1rem; font-weight:800;}
+  .s8-table-head small{font-size:0.78rem; color:var(--steel);}
+  .s8-tag{font-size:0.7rem; font-weight:600; color:var(--steel); background:var(--paper-soft); border:1px solid var(--line); border-radius:5px; padding:2px 8px; white-space:nowrap;}
+  .s8-grid{display:grid; grid-template-columns:76px repeat(3,1fr); font-size:0.84rem;}
+  .s8-grid > div{padding:12px 8px; border-top:1px solid var(--line-soft); text-align:center;}
+  .s8-grid .rh{text-align:left; color:var(--steel); font-weight:600; font-size:0.78rem;}
+  .s8-grid .ch{border-top:none; font-weight:800; font-size:0.86rem; padding-top:4px;}
+  .s8-grid .best{background:#FFF6EC;}
+  .s8-grid .ch.best{border-radius:10px 10px 0 0; color:var(--kraft-dark); position:relative;}
+  .s8-grid .last.best{border-radius:0 0 10px 10px;}
+  .s8-grid .ch.best::after{content:'추천'; display:block; margin:4px auto 0; width:max-content; font-size:0.64rem; color:#fff; background:var(--kraft-dark); border-radius:99px; padding:1px 7px;}
+  .s8-lv{display:inline-flex; gap:3px;}
+  .s8-lv i{width:8px; height:8px; border-radius:2px; background:#D7DEE5;}
+  .s8-lv i.on{background:var(--kraft-dark);}
+  .s8-table-foot{margin:14px 0 0; font-size:0.76rem; color:var(--steel-light); line-height:1.55;}
+  @media (max-width:900px){ .s8-compare{grid-template-columns:1fr; gap:28px;} }
+  @media (max-width:480px){ .s8-table{padding:16px 12px;} .s8-grid{grid-template-columns:62px repeat(3,1fr); font-size:0.78rem;} .s8-grid > div{padding:10px 4px;} }
+
+  /* 제조사 기준 · 선택 후 */
+  .s8-cards{display:grid; grid-template-columns:repeat(4,1fr); gap:14px;}
+  .s8-cards.c3{grid-template-columns:repeat(3,1fr);}
+  .s8-card{background:#fff; border:1px solid var(--line-soft); border-radius:14px; padding:22px 20px;}
+  .s8-card .s8-ic{width:40px; height:40px; border-radius:12px; background:#FBEDE0; color:var(--kraft-dark); display:flex; align-items:center; justify-content:center; margin-bottom:14px;}
+  .s8-card h3{margin:0 0 6px; font-size:1rem; font-weight:800; letter-spacing:-0.02em;}
+  .s8-card p{margin:0; font-size:0.86rem; line-height:1.6; color:var(--steel); word-break:keep-all;}
+  @media (max-width:900px){ .s8-cards, .s8-cards.c3{grid-template-columns:1fr 1fr;} }
+  @media (max-width:520px){ .s8-cards, .s8-cards.c3{grid-template-columns:1fr;} }
+
+  /* 취급 품목 */
+  .s8-items{display:grid; grid-template-columns:repeat(4,1fr); gap:12px;}
+  .s8-item{display:flex; flex-direction:column; align-items:flex-start; gap:10px; padding:20px 18px; border-radius:14px; border:1.5px solid var(--line-soft); background:#fff; color:var(--ink); text-decoration:none; font:inherit; text-align:left; cursor:pointer; transition:border-color .12s ease, transform .12s ease;}
+  .s8-item:hover{border-color:var(--kraft-dark); transform:translateY(-2px);}
+  .s8-item svg{color:var(--kraft-dark);}
+  .s8-item strong{font-size:0.98rem; font-weight:800; letter-spacing:-0.02em;}
+  .s8-item small{font-size:0.8rem; color:var(--steel);}
+  .s8-item em{margin-top:auto; font-style:normal; font-size:0.8rem; font-weight:700; color:var(--kraft-dark);}
+  @media (max-width:900px){ .s8-items{grid-template-columns:1fr 1fr;} }
+
+  /* FAQ */
+  .s8-faq{max-width:760px; margin:0 auto; border-top:1px solid var(--line);}
+  .s8-faq details{border-bottom:1px solid var(--line);}
+  .s8-faq summary{list-style:none; cursor:pointer; padding:20px 4px; display:flex; justify-content:space-between; gap:16px; font-size:1rem; font-weight:700; letter-spacing:-0.02em;}
+  .s8-faq summary::-webkit-details-marker{display:none;}
+  .s8-faq summary::after{content:'+'; flex:none; font-size:1.3rem; font-weight:400; color:var(--kraft-dark); line-height:1;}
+  .s8-faq details[open] summary::after{content:'−';}
+  .s8-faq details p{margin:0; padding:0 4px 20px; font-size:0.92rem; line-height:1.7; color:var(--steel); word-break:keep-all;}
+
+  /* 마지막 CTA */
+  .s8-final{background:var(--ink); color:#fff; padding:72px 0; text-align:center;}
+  .s8-final h2{margin:0 0 10px; font-size:clamp(1.5rem, 2.8vw, 2rem); font-weight:800; letter-spacing:-0.03em;}
+  .s8-final p{margin:0 0 26px; color:#B9C2CC; font-size:0.98rem;}
+  .s8-final .hp-go{max-width:360px; margin:0 auto;}
+  .s8-final .s8-final-sub{display:flex; justify-content:center; gap:16px; margin-top:14px; font-size:0.86rem; color:#9FB0C2;}
+  .s8-final .s8-final-sub a{color:#C7D0DA; text-decoration:underline; text-underline-offset:3px;}
+  .s8-br{display:none;}
+  @media (max-width:640px){ .s8-br{display:inline;} }
+
   /* ---------- v8: 포장재 견적 비교 (단계형) ---------- */
   .cw{
     --cw-ink:#0D2139; --cw-ink2:#1C3A56; --cw-steel:#516278; --cw-muted:#8CA0B0;
@@ -1175,6 +1285,12 @@
   .header-diag.js-open-diag{background:none; border-color:transparent; color:var(--steel); font-weight:600; padding-left:10px; padding-right:10px; gap:6px;}
   .header-diag.js-open-diag:hover{background:none; color:var(--ink);}
   .header-diag .hd-free{font-size:0.66rem; font-weight:800; color:var(--kraft-dark); background:#FBEDE0; border-radius:99px; padding:2px 7px;}
+
+  /* v8: 메인 이용 안내 아래 비교 결과 예시 */
+  .pc-compare{margin-top:56px; padding-top:48px; border-top:1px solid var(--line-soft);}
+  .pc-cmp-title{margin:0; font-size:clamp(1.3rem, 2.2vw, 1.7rem); line-height:1.4; font-weight:800; letter-spacing:-0.03em; word-break:keep-all;}
+  .pc-compare .hp-go{margin-top:28px; max-width:360px;}
+  @media (max-width:640px){ .pc-compare{margin-top:40px; padding-top:36px;} .pc-compare .hp-go{max-width:none;} }
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "name": "로지스인", "alternateName": ["LogisIn", "로지스인 LogisIn", "logis-in.com"], "url": "https://logis-in.com/"}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "LocalBusiness", "name": "로지스인 LogisIn", "alternateName": "LogisIn", "url": "https://logis-in.com/", "image": "https://logis-in.com/og-image.png", "logo": "https://logis-in.com/logo-512.png", "telephone": "+82-10-2761-7905", "description": "제조사 비교로 찾는 합리적인 포장재 솔루션. 골판지 박스, 아이스박스, 아이스팩, 에어캡, 테이프, 파렛트 도매 견적.", "founder": "유영준", "address": {"@type": "PostalAddress", "streetAddress": "고촌읍 고송로 20", "addressLocality": "김포시", "addressRegion": "경기도", "addressCountry": "KR"}, "areaServed": "KR", "sameAs": ["https://blog.naver.com/dypackaging77", "https://pf.kakao.com/_JxexixiX"]}</script>
@@ -1248,7 +1364,7 @@
             <button type="button" class="hp-tile" data-item="테이프 · 랩 · 필름" aria-pressed="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.2"/></svg><span>테이프 · 랩</span></button>
             <button type="button" class="hp-tile" data-item="파렛트" aria-pressed="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M12 3 3 8l9 5 9-5-9-5z"/><path d="M3 13l9 5 9-5"/></svg><span>파렛트</span></button>
             <button type="button" class="hp-tile" data-item="운송" aria-pressed="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M2 7h11v9H2V7z"/><path d="M13 10h4l4 3v3h-8v-6z"/><circle cx="6" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg><span>운송</span></button>
-            <button type="button" class="hp-tile hp-tile-more js-open-compare" data-source="hero_more"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>잘 모르겠어요</span></button>
+            <button type="button" class="hp-tile" data-item="기타 포장재" aria-pressed="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><circle cx="6" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18" cy="12" r="1.3"/></svg><span>기타 포장재</span></button>
           </div>
           <button type="button" class="hp-go js-open-compare" data-source="hero" data-skip="0"><span class="hp-go-label">무료 견적 비교 시작</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h16M13 5l7 7-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           <div class="hp-foot">
@@ -1362,11 +1478,56 @@
   </section>
 
 
+  <section class="process" id="steps">
+    <div class="wrap">
+      <p class="section-label">이용 안내</p>
+      <h2 class="section-heading">요청은 30초,<br>비교는 로지스인이 합니다.</h2>
+      <div class="process-grid pg-3">
+        <div class="process-card">
+          <div class="pc-top"><span class="pc-num">1</span><span class="pc-chip">30초</span></div>
+          <div class="pc-title">조건 고르기</div>
+          <div class="pc-desc">품목 · 수량 · 납기만 고르면<br class="br-d"> 요청이 끝나요.</div>
+          <button type="button" class="pc-link pc-link-btn js-open-compare" data-source="steps">견적 비교 시작 →</button>
+        </div>
+        <div class="process-card">
+          <div class="pc-top"><span class="pc-num">2</span><span class="pc-chip">평균 1일</span></div>
+          <div class="pc-title">제조사 견적 비교</div>
+          <div class="pc-desc">단가 · 납기 · 최소 수량 · 배송비를<br class="br-d"> 정리해 비교해 드려요.</div>
+        </div>
+        <div class="process-card">
+          <div class="pc-top"><span class="pc-num">3</span><span class="pc-chip">거래 의무 없음</span></div>
+          <div class="pc-title">비교하고 선택</div>
+          <div class="pc-desc">마음에 드는 조건만 고르세요.<br class="br-d"> 납품까지 챙겨드려요.</div>
+        </div>
+      </div>
+      <div class="s8-compare pc-compare">
+        <div>
+          <p class="section-label">비교 결과 예시</p>
+          <h3 class="pc-cmp-title">가격만이 아니라,<br>조건까지 한눈에 비교해요</h3>
+          <ul class="s8-points">
+          <li><span>단가 · 납기 · 최소 수량 · 배송비를 한 표로<small>견적서를 하나씩 열어 맞춰볼 필요가 없어요.</small></span></li>
+          <li><span>상황에 맞는 추천안까지<small>급한 납기, 소량 주문처럼 중요한 조건에 맞춰 골라드려요.</small></span></li>
+          <li><span>고르신 조건 그대로 발주<small>제조사와의 조율 · 발주 · 납품 확인은 로지스인이 맡아요.</small></span></li>
+        </ul>
+          <button type="button" class="hp-go js-open-compare" data-source="steps_compare"><span class="hp-go-label">무료 견적 비교 시작</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h16M13 5l7 7-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+        <div class="s8-table" aria-label="비교 결과 예시">
+        <div class="s8-table-head">
+          <div><strong>이중 골판지 박스 500×400×300</strong><small>월 3,000개 · 인천 납품</small></div>
+          <span class="s8-tag">예시</span>
+        </div>
+        <div class="s8-grid"><div class="rh"></div><div class="ch">A안</div><div class="ch best">B안</div><div class="ch">C안</div><div class="rh">단가</div><div><span class="s8-lv" aria-label="3/3"><i class="on"></i><i class="on"></i><i class="on"></i></span></div><div class="best"><span class="s8-lv" aria-label="1/3"><i class="on"></i><i></i><i></i></span></div><div><span class="s8-lv" aria-label="2/3"><i class="on"></i><i class="on"></i><i></i></span></div><div class="rh">납기</div><div>5일</div><div class="best">3일</div><div>2일</div><div class="rh">최소 수량</div><div>1,000개</div><div class="best">500개</div><div>2,000개</div><div class="rh">배송비</div><div>별도</div><div class="best last">포함</div><div>포함</div></div>
+        <p class="s8-table-foot">단가는 막대가 적을수록 낮아요. 제조사 정보와 세부 단가는 공개하지 않고, 조건별 비교안으로 정리해 드려요.</p>
+      </div>
+      </div>
+    </div>
+  </section>
+
   <section class="diagnosis" id="diagnosis">
     <div class="wrap">
       <div class="diag-hero">
         <div class="diag-hero-copy">
-          <p class="section-label">무료 포장비 진단 <span class="badge-free">FREE</span></p>
+          <p class="section-label">아직 구매 계획이 없다면? 무료 포장비 진단 <span class="badge-free">FREE</span></p>
           <h2 class="diag-title">지금 쓰는 포장재,<br><span class="hl">적정 가격</span>일까요?</h2>
           <p class="diag-sub">규격과 단가만 알려주세요.<br><strong>여러 제조사</strong>와 비교해 <strong>아낄 수 있는 금액</strong>을 계산해드립니다.</p>
           <div class="diag-promise">
@@ -1439,30 +1600,6 @@
     </div>
   </section>
 
-  <section class="process" id="steps">
-    <div class="wrap">
-      <p class="section-label">이용 안내</p>
-      <h2 class="section-heading">요청은 30초,<br>비교는 로지스인이 합니다.</h2>
-      <div class="process-grid pg-3">
-        <div class="process-card">
-          <div class="pc-top"><span class="pc-num">1</span><span class="pc-chip">30초</span></div>
-          <div class="pc-title">조건 고르기</div>
-          <div class="pc-desc">품목 · 수량 · 납기만 고르면<br class="br-d"> 요청이 끝나요.</div>
-          <button type="button" class="pc-link pc-link-btn js-open-compare" data-source="steps">견적 비교 시작 →</button>
-        </div>
-        <div class="process-card">
-          <div class="pc-top"><span class="pc-num">2</span><span class="pc-chip">평균 1일</span></div>
-          <div class="pc-title">제조사 견적 비교</div>
-          <div class="pc-desc">단가 · 납기 · 최소 수량 · 배송비를<br class="br-d"> 정리해 비교해 드려요.</div>
-        </div>
-        <div class="process-card">
-          <div class="pc-top"><span class="pc-num">3</span><span class="pc-chip">거래 의무 없음</span></div>
-          <div class="pc-title">비교하고 선택</div>
-          <div class="pc-desc">마음에 드는 조건만 고르세요.<br class="br-d"> 납품까지 챙겨드려요.</div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <section class="brand-story brand-compact" id="brand" style="background:var(--white); border-top:1px solid var(--line-soft); border-bottom:1px solid var(--line-soft);">
     <div class="wrap">
@@ -1937,7 +2074,8 @@
       manager: fd.get('manager'),
       phone: fd.get('phone'),
       company: '',
-      message: '[상담창 · ' + (method === '전화' ? '전화 상담 요청' : '문자 답변 희망') + ']' + (note ? '\n' + note : '')
+      contactMethod: method === '전화' ? '전화 상담' : '문자 답변',
+      message: '[' + (method === '전화' ? '전화 상담 요청' : '문자 답변 희망') + ']' + (note ? '\n' + note : '')
     };
 
     fetch(QUOTE_ENDPOINT, {
@@ -2200,6 +2338,7 @@
     bag: ic('<path d="M4 7h16v11H4V7z"/><path d="M4 7l8 6 8-6"/>'),
     tape: ic('<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.2"/>'),
     pallet: ic('<path d="M12 3 3 8l9 5 9-5-9-5z"/><path d="M3 13l9 5 9-5"/>'),
+    etc: ic('<circle cx="6" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18" cy="12" r="1.3"/>'),
     truck: ic('<path d="M2 7h11v9H2V7z"/><path d="M13 10h4l4 3v3h-8v-6z"/><circle cx="6" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/>')
   };
   const ITEMS = [
@@ -2209,7 +2348,8 @@
     ['안전봉투 · OPP봉투','bag','택배봉투 · 비닐'],
     ['테이프 · 랩 · 필름','tape','OPP 테이프 · 공업용 랩'],
     ['파렛트','pallet','일회용 · 수출용'],
-    ['운송','truck','용차 · 화물 납품 운송']
+    ['운송','truck','용차 · 화물 납품 운송'],
+    ['기타 포장재','etc','감열지 · 인쇄 포장 등']
   ];
   const STEPS = [
     { key:'items', type:'multi', q:'어떤 포장재 견적이 필요하세요?', help:'여러 개 골라도 한 번에 비교해 드려요.' },
@@ -2346,13 +2486,21 @@
       if (msg) { err.textContent = msg; err.hidden = false; return; }
       err.hidden = true;
       btn.disabled = true; btn.textContent = '보내는 중...';
-      const items = '[견적 비교] ' + st.items.join(', ') + (st.qty ? ' / 수량: ' + st.qty : '') + (st.detail ? '\n' + st.detail : '');
+      // 시트 '견적요청' 탭 열 순서에 맞춰 한 칸에 한 항목씩 보냅니다
+      // B 이름 · C 연락처 · D 회사명 · G 품목 · H 수량 · I 구매 주기 · J 필요 시기
+      // K 중요 조건 · L 규격 · 메모 · M 납품 지역 · N 유입 경로 (E · F는 비움)
       const payload = {
-        formType: 'quote', manager: st.manager, phone: st.phone, company: st.company,
-        position: '', site: '', items: items, shipping: '',
-        purpose: st.cycle, dueDate: st.when, address: st.region,
-        currentSupplier: '', currentPrice: '',
-        etc: (st.prefs.length ? '중요: ' + st.prefs.join(', ') : '') + (source ? (st.prefs.length ? ' · ' : '') + '유입: ' + source : '')
+        formType: 'quote',
+        manager: st.manager, phone: st.phone, company: st.company,
+        position: '', site: '',
+        items: st.items.join(', '),
+        shipping: st.qty,
+        purpose: st.cycle,
+        dueDate: st.when,
+        currentSupplier: st.prefs.join(', '),
+        currentPrice: st.detail,
+        address: st.region,
+        etc: '견적 비교' + (source ? ' · ' + source : '')
       };
       fetch(ENDPOINT, { method:'POST', mode:'no-cors', headers:{ 'Content-Type':'text/plain;charset=utf-8' }, body: JSON.stringify(payload) })
         .catch(() => {})
