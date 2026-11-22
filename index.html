@@ -18,8 +18,8 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="naver-site-verification" content="c82be61c027be8e5740a4b93fe2deab6cbeed3a2" />
-<title>로지스인 LogisIn | 포장재 도매 단가 비교·맞춤 견적</title>
-<meta name="description" content="로지스인(LogisIn)은 제조사 단가를 비교해 맞춤 견적을 드리는 기업 포장재 구매 파트너입니다. 박스·아이스팩·에어캡·테이프 견적 문의." />
+<title>로지스인 LogisIn | 포장재 견적 비교 · 제조사 단가 비교</title>
+<meta name="description" content="필요한 포장재와 수량만 고르면 여러 제조사 견적을 무료로 비교해 드려요. 박스·아이스팩·에어캡·테이프 도매 견적 비교, 로지스인(LogisIn)." />
 <meta name="keywords" content="포장재 도매, 포장재 단가 비교, 택배박스 도매, 골판지 박스 제작, 아이스박스 도매, 아이스팩 대량구매, 에어캡 도매, OPP 테이프, 일회용 파렛트, 포장재 MRO, 김포 포장재" />
 <link rel="canonical" href="https://logis-in.com/" />
 <meta name="theme-color" content="#0D2139" />
@@ -996,6 +996,185 @@
   .dr-total{flex-wrap:wrap; row-gap:4px;}
   .dr-total .dr-year{flex-basis:100%; text-align:right; font-size:0.8rem; color:#C7D0DA;}
   .dr-total .dr-year::before{content:''; display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--tape); margin-right:6px; vertical-align:2px;}
+
+  /* ---------- v8: 첫 화면 — 품목 고르기로 시작 ---------- */
+  .hero-pick{margin-top:30px; max-width:560px;}
+  .hero-pick-q{margin:0 0 12px; font-size:1.02rem; font-weight:700; color:#fff; letter-spacing:-0.02em;}
+  .hero-pick-q span{font-weight:500; font-size:0.86rem; color:#9FB0C2; margin-left:6px;}
+  .hp-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:8px;}
+  .hp-tile{
+    position:relative; display:flex; flex-direction:column; align-items:flex-start; gap:8px; min-height:84px; padding:12px 12px 11px;
+    border-radius:12px; border:1.5px solid rgba(255,255,255,0.14); background:rgba(255,255,255,0.06); color:#fff;
+    font:inherit; font-size:0.86rem; font-weight:600; text-align:left; line-height:1.3; cursor:pointer; word-break:keep-all;
+    transition:background .12s ease, border-color .12s ease;
+  }
+  .hp-tile:hover{background:rgba(255,255,255,0.11);}
+  .hp-tile:focus-visible{outline:2px solid var(--tape); outline-offset:2px;}
+  .hp-tile svg{color:var(--tape);}
+  .hp-tile::after{content:''; position:absolute; top:9px; right:9px; width:16px; height:16px; border-radius:50%; border:1.5px solid rgba(255,255,255,0.3);}
+  .hp-tile[aria-pressed="true"]{background:#fff; border-color:#fff; color:var(--ink);}
+  .hp-tile[aria-pressed="true"], .hp-tile[aria-pressed="true"]:hover{background:#fff; border-color:#fff; color:var(--ink); transition:none;}
+  .hp-tile[aria-pressed="true"] svg{color:var(--kraft-dark);}
+  body.hero-in-view .chat-launcher{opacity:0; pointer-events:none;}
+  .hp-tile[aria-pressed="true"]::after{background:var(--kraft-dark); border-color:var(--kraft-dark); box-shadow:inset 0 0 0 3px #fff;}
+  .hp-go{
+    margin-top:12px; width:100%; height:58px; border:none; border-radius:12px; background:var(--kraft); color:#fff;
+    display:flex; align-items:center; justify-content:center; gap:10px; font:inherit; font-size:1.06rem; font-weight:700; cursor:pointer;
+    box-shadow:0 14px 30px -12px rgba(228,133,45,0.65); transition:background .15s ease;
+  }
+  .hp-go:hover{background:var(--tape); color:var(--ink);}
+  .hp-go svg{transition:transform .15s ease;}
+  .hp-go:hover svg{transform:translateX(3px);}
+  .hp-foot{display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px 16px; margin-top:12px; font-size:0.84rem; color:#9FB0C2;}
+  .hp-foot .hp-assure{display:flex; gap:14px; flex-wrap:wrap;}
+  .hp-foot .hp-assure span::before{content:'✓ '; color:var(--tape); font-weight:700;}
+  .hp-foot a{color:#C7D0DA; text-decoration:underline; text-underline-offset:3px;}
+  .hp-foot a:hover{color:var(--tape);}
+  @media (max-width:640px){
+    .hero-pick{margin-top:24px;}
+    .hp-grid{grid-template-columns:1fr 1fr;}
+    .hp-tile{flex-direction:row; align-items:center; min-height:52px; padding:10px 34px 10px 12px; font-size:0.86rem;}
+    .hp-tile::after{top:50%; transform:translateY(-50%);}
+    .hp-foot{flex-direction:column;}
+  }
+
+  /* 오른쪽: 제조사 비교 카드 (금액 없이 구조만) */
+  .cmp-card{
+    width:100%; max-width:380px; background:var(--white); color:var(--ink); border-radius:14px; padding:24px 22px 20px;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,0.5); transform:rotate(1.5deg) scale(0.97);
+  }
+  .cmp-head{display:flex; justify-content:space-between; align-items:flex-start; gap:10px; padding-bottom:14px; border-bottom:1px solid var(--line-soft);}
+  .cmp-title{font-weight:800; font-size:1rem; letter-spacing:-0.02em;}
+  .cmp-item{margin-top:4px; font-size:0.76rem; color:var(--steel);}
+  .cmp-list{list-style:none; margin:14px 0 0; padding:0; display:flex; flex-direction:column; gap:8px;}
+  .cmp-list li{position:relative; display:grid; grid-template-columns:62px 1fr 54px; align-items:center; gap:10px; padding:11px 12px; border:1px solid var(--line-soft); border-radius:9px; font-size:0.8rem;}
+  .cmp-name{font-weight:700;}
+  .cmp-bar{height:8px; background:var(--paper-soft); border-radius:99px; overflow:hidden;}
+  .cmp-bar i{display:block; height:100%; background:#C4CDD6; border-radius:99px;}
+  .cmp-meta{font-size:0.72rem; color:var(--steel); text-align:right;}
+  .cmp-list li.is-best{border-color:var(--kraft-dark); background:#FFF8F1; box-shadow:0 0 0 1px var(--kraft-dark) inset;}
+  .cmp-list li.is-best .cmp-bar i{background:var(--kraft-dark);}
+  .cmp-badge{position:absolute; top:-9px; right:10px; background:var(--kraft-dark); color:#fff; font-size:0.64rem; font-weight:700; padding:2px 8px; border-radius:99px;}
+  .cmp-legend{margin-top:8px; font-size:0.68rem; color:var(--steel-light);}
+  .cmp-steps{margin-top:14px; display:flex; flex-wrap:wrap; gap:4px 8px; align-items:center; font-size:0.72rem; color:var(--steel);}
+  .cmp-steps span{padding:3px 9px; border-radius:99px; background:var(--paper-soft); font-weight:600;}
+  .cmp-steps b{color:var(--steel-light); font-weight:400;}
+  .cmp-foot{margin-top:14px; padding-top:12px; border-top:1px solid var(--line-soft); display:flex; gap:8px; align-items:center; font-size:0.78rem; color:var(--ink-soft);}
+  .cmp-check{flex:none; width:20px; height:20px; border-radius:50%; background:var(--kraft-dark); color:#fff; display:flex; align-items:center; justify-content:center; font-size:0.7rem;}
+
+  /* 이용 안내 3단계 */
+  .process .process-grid.pg-3{grid-template-columns:repeat(3,1fr);}
+  @media (max-width:980px){ .process .process-grid.pg-3{grid-template-columns:1fr;} }
+
+  /* ---------- v8: 포장재 견적 비교 (단계형) ---------- */
+  .cw{
+    --cw-ink:#0D2139; --cw-ink2:#1C3A56; --cw-steel:#516278; --cw-muted:#8CA0B0;
+    --cw-line:rgba(13,33,57,0.12); --cw-soft:#F4F7F9; --cw-accent:#C96A1F; --cw-accent2:#E4852D; --cw-tint:#FFF6EC;
+    display:flex; flex-direction:column; color:var(--cw-ink); font-family:inherit; min-height:0;
+  }
+  .cw-top{display:flex; align-items:center; gap:10px; padding:14px 16px 12px; flex-shrink:0;}
+  .cw-iconbtn{width:36px; height:36px; flex:none; border:none; background:none; border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--cw-ink); cursor:pointer;}
+  .cw-iconbtn:hover{background:var(--cw-soft);}
+  .cw-iconbtn[hidden]{visibility:hidden; display:flex;}
+  .cw-progress{flex:1; height:6px; background:var(--cw-soft); border-radius:99px; overflow:hidden;}
+  .cw-progress i{display:block; height:100%; width:0; background:var(--cw-accent); border-radius:99px; transition:width .25s ease;}
+  .cw-count{font-size:0.78rem; font-weight:600; color:var(--cw-muted); min-width:34px; text-align:right;}
+
+  .cw-body{flex:1; overflow-y:auto; padding:8px 24px 16px;}
+  .cw-step{animation:cwIn .22s ease;}
+  @keyframes cwIn{from{opacity:0; transform:translateX(12px);} to{opacity:1; transform:none;}}
+  @media (prefers-reduced-motion:reduce){ .cw-step{animation:none;} .cw-progress i{transition:none;} }
+  .cw-q{margin:6px 0 6px; font-size:1.32rem; font-weight:800; letter-spacing:-0.03em; line-height:1.4; word-break:keep-all;}
+  .cw-help{margin:0 0 18px; font-size:0.88rem; color:var(--cw-steel); word-break:keep-all;}
+
+  .cw-opts{display:grid; gap:8px;}
+  .cw-opts.cw-grid{grid-template-columns:1fr 1fr;}
+  .cw-opt{
+    position:relative; display:flex; align-items:center; gap:12px; width:100%; min-height:56px; padding:12px 16px;
+    border:1.5px solid var(--cw-line); border-radius:12px; background:#fff; color:var(--cw-ink);
+    font:inherit; font-size:0.96rem; font-weight:600; text-align:left; cursor:pointer; word-break:keep-all;
+    transition:border-color .12s ease, background .12s ease;
+  }
+  .cw-opt:hover{border-color:rgba(201,106,31,0.5);}
+  .cw-opt:focus-visible{outline:2px solid var(--cw-accent); outline-offset:2px;}
+  .cw-opt[aria-pressed="true"]{border-color:var(--cw-accent); background:var(--cw-tint);}
+  .cw-opt .cw-ic{flex:none; width:34px; height:34px; border-radius:50%; background:var(--cw-soft); display:flex; align-items:center; justify-content:center; color:var(--cw-accent);}
+  .cw-opt[aria-pressed="true"] .cw-ic{background:#fff;}
+  .cw-opt .cw-sub{display:block; font-size:0.76rem; font-weight:500; color:var(--cw-muted); margin-top:2px;}
+  .cw-opt .cw-check{margin-left:auto; flex:none; width:22px; height:22px; border-radius:50%; border:1.5px solid var(--cw-line); display:flex; align-items:center; justify-content:center; color:transparent; font-size:0.72rem;}
+  .cw-opt[aria-pressed="true"] .cw-check{background:var(--cw-accent); border-color:var(--cw-accent); color:#fff;}
+  .cw-grid .cw-opt{flex-direction:column; align-items:flex-start; gap:10px; min-height:96px;}
+  .cw-grid .cw-opt .cw-check{position:absolute; top:10px; right:10px; margin:0;}
+
+  .cw-chips{display:flex; flex-wrap:wrap; gap:8px; margin:4px 0 18px;}
+  .cw-chip{height:38px; padding:0 14px; border-radius:99px; border:1.5px solid var(--cw-line); background:#fff; font:inherit; font-size:0.86rem; font-weight:600; color:var(--cw-ink2); cursor:pointer;}
+  .cw-chip[aria-pressed="true"]{border-color:var(--cw-accent); background:var(--cw-tint); color:var(--cw-accent);}
+  .cw-label{display:block; margin:0 0 8px; font-size:0.84rem; font-weight:700; color:var(--cw-ink2);}
+  .cw-label small{font-weight:500; color:var(--cw-muted);}
+  .cw input[type="text"], .cw input[type="tel"], .cw textarea{
+    width:100%; box-sizing:border-box; font:inherit; font-size:1rem; color:var(--cw-ink);
+    border:1.5px solid var(--cw-line); border-radius:12px; padding:13px 14px; background:#fff; margin:0 0 12px;
+  }
+  .cw textarea{resize:vertical; min-height:96px; line-height:1.55;}
+  .cw input:focus, .cw textarea:focus{outline:none; border-color:var(--cw-accent); box-shadow:0 0 0 3px rgba(201,106,31,0.14);}
+
+  .cw-summary{margin:0 0 18px; padding:14px 16px; border-radius:12px; background:var(--cw-soft);}
+  .cw-summary-t{font-size:0.76rem; font-weight:700; color:var(--cw-muted); margin:0 0 8px;}
+  .cw-summary ul{list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:6px;}
+  .cw-summary li{font-size:0.8rem; font-weight:600; color:var(--cw-ink2); background:#fff; border:1px solid var(--cw-line); border-radius:99px; padding:4px 10px;}
+  .cw-agree{display:flex; align-items:flex-start; gap:9px; margin:2px 0 4px; font-size:0.86rem; cursor:pointer;}
+  .cw-agree input{width:18px; height:18px; margin-top:1px; accent-color:var(--cw-accent); flex:none;}
+  .cw-agree button{border:none; background:none; padding:0 0 0 4px; font:inherit; font-size:0.8rem; color:var(--cw-steel); text-decoration:underline; cursor:pointer;}
+  .cw-privacy{margin:0 0 4px 27px; font-size:0.72rem; color:var(--cw-muted); line-height:1.5;}
+  .cw-err{margin:6px 0 0; font-size:0.82rem; color:#C0392B; font-weight:600;}
+
+  .cw-foot{flex-shrink:0; display:flex; gap:8px; padding:12px 24px calc(16px + env(safe-area-inset-bottom)); border-top:1px solid var(--cw-line); background:#fff;}
+  .cw-next{flex:1; height:54px; border:none; border-radius:12px; background:var(--cw-accent); color:#fff; font:inherit; font-size:1.02rem; font-weight:700; cursor:pointer;}
+  .cw-next:hover{background:var(--cw-accent2);}
+  .cw-next:disabled{background:#D5DBE1; color:#fff; cursor:default;}
+  .cw-skip{flex:none; height:54px; padding:0 18px; border:1.5px solid var(--cw-line); border-radius:12px; background:#fff; font:inherit; font-size:0.94rem; font-weight:600; color:var(--cw-steel); cursor:pointer;}
+  .cw-foot-note{flex-basis:100%; margin:-2px 0 0; text-align:center; font-size:0.76rem; color:var(--cw-muted);}
+  .cw-foot{flex-wrap:wrap;}
+
+  .cw-done{text-align:center; padding:12px 0 4px;}
+  .cw-done-ic{width:56px; height:56px; margin:6px auto 16px; border-radius:50%; background:var(--cw-accent); color:#fff; display:flex; align-items:center; justify-content:center; font-size:1.5rem;}
+  .cw-done h3{margin:0 0 8px; font-size:1.3rem; font-weight:800; letter-spacing:-0.03em;}
+  .cw-done > p{margin:0 0 20px; font-size:0.92rem; color:var(--cw-steel); word-break:keep-all;}
+  .cw-timeline{list-style:none; margin:0 0 20px; padding:0; text-align:left; border:1px solid var(--cw-line); border-radius:12px;}
+  .cw-timeline li{display:flex; gap:12px; align-items:center; padding:13px 16px; border-top:1px solid var(--cw-line); font-size:0.88rem;}
+  .cw-timeline li:first-child{border-top:none;}
+  .cw-timeline b{flex:none; width:24px; height:24px; border-radius:50%; background:var(--cw-soft); color:var(--cw-ink2); display:flex; align-items:center; justify-content:center; font-size:0.76rem;}
+  .cw-timeline li.is-now b{background:var(--cw-accent); color:#fff;}
+  .cw-timeline span{flex:1; font-weight:600;}
+  .cw-timeline em{font-style:normal; font-size:0.78rem; color:var(--cw-muted);}
+  .cw-kakao{display:block; padding:14px; border-radius:12px; background:#FEE500; color:#191919; font-size:0.92rem; font-weight:700; text-decoration:none; margin:0 0 10px;}
+  .cw-close-link{border:none; background:none; font:inherit; font-size:0.88rem; color:var(--cw-steel); text-decoration:underline; cursor:pointer;}
+
+  /* 모달 */
+  .cw-modal{position:fixed; inset:0; z-index:200; background:rgba(13,33,57,0.55); display:flex; align-items:center; justify-content:center; padding:24px;}
+  .cw-modal[hidden]{display:none;}
+  .cw-modal .cw{width:100%; max-width:540px; height:min(720px, calc(100vh - 48px)); background:#fff; border-radius:18px; overflow:hidden; box-shadow:0 40px 90px -30px rgba(0,0,0,0.6);}
+  @media (max-width:640px){
+    .cw-modal{padding:0;}
+    .cw-modal .cw{max-width:none; height:100%; border-radius:0;}
+    .cw-body{padding:8px 20px 16px;}
+    .cw-foot{padding:12px 20px calc(14px + env(safe-area-inset-bottom));}
+    .cw-q{font-size:1.22rem;}
+  }
+  body.cw-lock{overflow:hidden;}
+
+  /* 페이지 안에 바로 넣는 경우(견적 비교 페이지) */
+  .cw-inline .cw{background:#fff; border:1px solid rgba(13,33,57,0.1); border-radius:18px; overflow:hidden; min-height:600px; box-shadow:0 20px 50px -30px rgba(13,33,57,0.35);}
+  .cw-inline .cw-close{display:none;}
+
+  /* v8: 헤더 — 견적 비교를 주 버튼으로 */
+  .header-cta.js-open-compare{background:var(--kraft); border-color:var(--kraft); color:#fff; border-radius:10px; gap:6px; font-weight:700; box-shadow:0 8px 18px -10px rgba(228,133,45,0.8);}
+  .header-cta.js-open-compare:hover{background:var(--tape); border-color:var(--tape); color:var(--ink);}
+  .header-cta.js-open-compare svg{transition:transform .15s ease;}
+  .header-cta.js-open-compare:hover svg{transform:translateX(2px);}
+  .header-diag.js-open-diag{background:none; border-color:transparent; color:var(--steel); font-weight:600; padding-left:10px; padding-right:10px; gap:6px;}
+  .header-diag.js-open-diag:hover{background:none; color:var(--ink);}
+  .header-diag .hd-free{font-size:0.66rem; font-weight:800; color:var(--kraft-dark); background:#FBEDE0; border-radius:99px; padding:2px 7px;}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "name": "로지스인", "alternateName": ["LogisIn", "로지스인 LogisIn", "logis-in.com"], "url": "https://logis-in.com/"}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "LocalBusiness", "name": "로지스인 LogisIn", "alternateName": "LogisIn", "url": "https://logis-in.com/", "image": "https://logis-in.com/og-image.png", "logo": "https://logis-in.com/logo-512.png", "telephone": "+82-10-2761-7905", "description": "제조사 비교로 찾는 합리적인 포장재 솔루션. 골판지 박스, 아이스박스, 아이스팩, 에어캡, 테이프, 파렛트 도매 견적.", "founder": "유영준", "address": {"@type": "PostalAddress", "streetAddress": "고촌읍 고송로 20", "addressLocality": "김포시", "addressRegion": "경기도", "addressCountry": "KR"}, "areaServed": "KR", "sameAs": ["https://blog.naver.com/dypackaging77", "https://pf.kakao.com/_JxexixiX"]}</script>
@@ -1017,8 +1196,8 @@
       <a href="#faq">자주 묻는 질문</a>
     </nav>
     <div class="header-actions">
-      <a class="btn btn-ghost header-diag js-open-diag" href="#free-diagnosis" data-source="header">무료 포장비 진단</a>
-      <a class="btn btn-primary header-cta" href="logisin-quote-request.html">견적 문의</a>
+      <a class="btn btn-ghost header-diag js-open-diag" href="#free-diagnosis" data-source="header">포장비 진단 <span class="hd-free">FREE</span></a>
+      <a class="btn btn-primary header-cta js-open-compare" href="logisin-quote-request.html" data-source="header">무료 견적 비교 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h16M13 5l7 7-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       <button type="button" class="nav-toggle" id="navToggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="mobileNav">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
       </button>
@@ -1043,7 +1222,7 @@
       <a href="logisin-product-introduction.pdf" target="_blank" rel="noopener">제품설명서</a>
     </nav>
     <div class="mobile-nav-cta">
-      <a class="btn btn-primary" href="logisin-quote-request.html">맞춤 견적 요청하기</a>
+      <a class="btn btn-primary js-open-compare" href="logisin-quote-request.html" data-source="mobile_menu">무료 견적 비교</a>
       <a class="btn btn-ghost js-open-diag" href="#free-diagnosis" data-source="mobile_menu">무료 포장비 진단 <span class="badge-free">FREE</span></a>
       <a class="btn btn-kakao" href="https://pf.kakao.com/_JxexixiX/chat" target="_blank" rel="noopener" data-track="menu_kakao">카카오톡 상담</a>
     </div>
@@ -1056,47 +1235,45 @@
   <section class="hero">
     <div class="wrap">
       <div class="hero-copy">
-        <p class="hero-kicker"><span class="hero-kicker-brand">로지스인</span><span class="hero-kicker-sep"></span>기업 포장재 구매 파트너</p>
-        <h1>박스·아이스팩·에어캡<br>포장재 <span class="hl">제조사 비교 견적</span></h1>
-        <p class="sub">필요한 품목과 수량만 남겨주세요. 여러 제휴 제조사 단가를 비교해 평균 1일 이내 견적을 보내드립니다. 테이프·에어캡 같은 기성품은 소량 주문도 가능합니다.</p>
-        <div class="hero-actions">
-          <a class="btn btn-primary btn-hero" href="logisin-quote-request.html">맞춤 견적 요청하기
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h16M13 5l7 7-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-          <a class="btn btn-hero-sub js-open-diag" href="#free-diagnosis" data-source="hero">무료 포장비 진단 <span class="badge-free">FREE</span></a>
+        <p class="hero-kicker"><span class="hero-kicker-brand">로지스인</span><span class="hero-kicker-sep"></span>포장재 견적 비교</p>
+        <h1>포장재 견적,<br>한 번에 <span class="hl">여러 제조사 비교</span></h1>
+        <p class="sub">필요한 포장재만 골라주세요. 제휴 제조사 견적을 모아 비교해 드리고, 가장 합리적인 곳을 고를 수 있게 도와드려요.</p>
+        <div class="hero-pick" data-compare-scope>
+          <p class="hero-pick-q">어떤 포장재가 필요하세요? <span>여러 개 선택 가능</span></p>
+          <div class="hp-grid">
+            <button type="button" class="hp-tile" data-item="골판지 박스" aria-pressed="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4V11M21 7v10l-9 4"/></svg><span>골판지 박스</span></button>
+            <button type="button" class="hp-tile" data-item="스티로폼박스 · 아이스팩" aria-pressed="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M12 2v20M4.2 6l15.6 12M19.8 6 4.2 18"/></svg><span>스티로폼박스 · 아이스팩</span></button>
+            <button type="button" class="hp-tile" data-item="에어캡 · 완충재" aria-pressed="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/></svg><span>에어캡 · 완충재</span></button>
+            <button type="button" class="hp-tile" data-item="안전봉투 · OPP봉투" aria-pressed="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16v11H4V7z"/><path d="M4 7l8 6 8-6"/></svg><span>안전 · OPP봉투</span></button>
+            <button type="button" class="hp-tile" data-item="테이프 · 랩 · 필름" aria-pressed="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.2"/></svg><span>테이프 · 랩</span></button>
+            <button type="button" class="hp-tile" data-item="파렛트" aria-pressed="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M12 3 3 8l9 5 9-5-9-5z"/><path d="M3 13l9 5 9-5"/></svg><span>파렛트</span></button>
+            <button type="button" class="hp-tile" data-item="운송" aria-pressed="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M2 7h11v9H2V7z"/><path d="M13 10h4l4 3v3h-8v-6z"/><circle cx="6" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg><span>운송</span></button>
+            <button type="button" class="hp-tile hp-tile-more js-open-compare" data-source="hero_more"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>잘 모르겠어요</span></button>
+          </div>
+          <button type="button" class="hp-go js-open-compare" data-source="hero" data-skip="0"><span class="hp-go-label">무료 견적 비교 시작</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h16M13 5l7 7-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="hp-foot">
+            <span class="hp-assure"><span>30초 요청</span><span>비교 무료</span><span>거래 의무 없음</span></span>
+            <a href="#free-diagnosis" class="js-open-diag" data-source="hero">지금 단가가 적정한지 먼저 진단받기 →</a>
+          </div>
         </div>
-        <ul class="hero-assure">
-          <li>견적·진단 무료</li>
-          <li>거래 의무 없음</li>
-          <li>세금계산서 발행</li>
-        </ul>
       </div>
       <div class="doc-stage">
-        <div class="doc-card">
-          <div class="doc-stamp">견적<br>완료</div>
-          <div class="doc-head">
+        <div class="cmp-card" aria-hidden="true">
+          <div class="cmp-head">
             <div>
-              <div class="doc-title">LogisIn 견적서 <span class="doc-sample">예시</span></div>
-              <div class="doc-no mono" id="docNo">NO. QT-2609-014</div>
+              <div class="cmp-title">제조사 견적 비교</div>
+              <div class="cmp-item">이중 골판지 박스 500×400×300 · 월 3,000개</div>
             </div>
+            <span class="doc-sample">예시</span>
           </div>
-          <div class="doc-meta">
-            <div>수신 — OO물류 자재팀 귀하</div>
-            <div id="docDate">견적일 — 2026. 09. 07</div>
-            <div id="docValid">유효기간 — 2026. 09. 21까지</div>
-          </div>
-          <table class="doc-table">
-            <thead>
-              <tr><th>품명</th><th>규격</th><th>수량</th><th>단가</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>에어캡</td><td>50×50m</td><td class="num">40</td><td class="num">8,500</td></tr>
-              <tr><td>이중 골판지 박스</td><td>500×400×300</td><td class="num">300</td><td class="num">1,650</td></tr>
-              <tr><td>OPP 테이프</td><td>48mm×48m</td><td class="num">120</td><td class="num">720</td></tr>
-              <tr><td>공업용 필름</td><td>15mic×500mm×350m</td><td class="num">60</td><td class="num">13,800</td></tr>
-            </tbody>
-          </table>
-          <div class="doc-total"><span>견적 합계 <small>VAT 별도</small></span><span class="mono">1,749,400원</span></div>
+          <ul class="cmp-list">
+            <li><span class="cmp-name">A 제조사</span><span class="cmp-bar"><i style="width:94%"></i></span><span class="cmp-meta">납기 5일</span></li>
+            <li class="is-best"><span class="cmp-name">B 제조사</span><span class="cmp-bar"><i style="width:78%"></i></span><span class="cmp-meta">납기 3일</span><span class="cmp-badge">추천 조건</span></li>
+            <li><span class="cmp-name">C 제조사</span><span class="cmp-bar"><i style="width:100%"></i></span><span class="cmp-meta">납기 2일</span></li>
+          </ul>
+          <div class="cmp-legend">막대가 짧을수록 낮은 단가</div>
+          <div class="cmp-steps"><span>단가</span><b>·</b><span>납기</span><b>·</b><span>최소 수량</span><b>·</b><span>배송비</span></div>
+          <div class="cmp-foot"><span class="cmp-check">✓</span><span>비교표를 보고 <strong>원하는 곳을 고르기만</strong> 하세요</span></div>
         </div>
       </div>
     </div>
@@ -1265,28 +1442,23 @@
   <section class="process" id="steps">
     <div class="wrap">
       <p class="section-label">이용 안내</p>
-      <h2 class="section-heading">문의 한 번이면,<br>비교부터 납품까지 끝납니다.</h2>
-      <div class="process-grid">
+      <h2 class="section-heading">요청은 30초,<br>비교는 로지스인이 합니다.</h2>
+      <div class="process-grid pg-3">
         <div class="process-card">
-          <div class="pc-top"><span class="pc-num">1</span><span class="pc-chip">평균 1일 이내 회신</span></div>
-          <div class="pc-title">상담 요청</div>
-          <div class="pc-desc">필요한 포장재와 수량만<br class="br-d"> 알려주세요.</div>
-          <button type="button" class="pc-link pc-link-btn js-open-chat" data-source="steps">상담 요청하기 →</button>
+          <div class="pc-top"><span class="pc-num">1</span><span class="pc-chip">30초</span></div>
+          <div class="pc-title">조건 고르기</div>
+          <div class="pc-desc">품목 · 수량 · 납기만 고르면<br class="br-d"> 요청이 끝나요.</div>
+          <button type="button" class="pc-link pc-link-btn js-open-compare" data-source="steps">견적 비교 시작 →</button>
         </div>
         <div class="process-card">
-          <div class="pc-top"><span class="pc-num">2</span><span class="pc-chip">단가 비교</span></div>
-          <div class="pc-title">제조사 비교 · 단가 제안</div>
-          <div class="pc-desc">여러 제조사 단가를 비교해<br class="br-d"> 제안드려요.</div>
+          <div class="pc-top"><span class="pc-num">2</span><span class="pc-chip">평균 1일</span></div>
+          <div class="pc-title">제조사 견적 비교</div>
+          <div class="pc-desc">단가 · 납기 · 최소 수량 · 배송비를<br class="br-d"> 정리해 비교해 드려요.</div>
         </div>
         <div class="process-card">
-          <div class="pc-top"><span class="pc-num">3</span><span class="pc-chip">조건 맞춤</span></div>
-          <div class="pc-title">결제 · 일정 확정</div>
-          <div class="pc-desc">결제 조건과 납품 일정을<br class="br-d"> 함께 맞춰요.</div>
-        </div>
-        <div class="process-card">
-          <div class="pc-top"><span class="pc-num">4</span><span class="pc-chip">발주 기록 보관</span></div>
-          <div class="pc-title">납품 확인 · 기록</div>
-          <div class="pc-desc">도착까지 확인하고<br class="br-d"> 발주 내역을 남겨드려요.</div>
+          <div class="pc-top"><span class="pc-num">3</span><span class="pc-chip">거래 의무 없음</span></div>
+          <div class="pc-title">비교하고 선택</div>
+          <div class="pc-desc">마음에 드는 조건만 고르세요.<br class="br-d"> 납품까지 챙겨드려요.</div>
         </div>
       </div>
     </div>
@@ -1386,10 +1558,10 @@
 
   <section class="final-cta" id="final-cta">
     <div class="wrap">
-      <h2>지금 LogisIn에 필요한 포장재를 알려주세요.</h2>
-      <p>필요한 포장재와 수량만 알려주시면, 가장 합리적인 단가로 제안해드립니다.<br>아직 구매 계획이 없다면, 지금 쓰는 포장비부터 무료로 진단받아 보세요.</p>
+      <h2>포장재, 견적 비교부터 받아보세요.</h2>
+      <p>조건만 고르면 여러 제조사 견적을 모아 비교해 드려요. 비교는 무료, 선택은 자유입니다.<br>아직 구매 계획이 없다면, 지금 쓰는 포장비부터 무료로 진단받아 보세요.</p>
       <div class="final-actions">
-        <a class="btn btn-primary" href="logisin-quote-request.html">맞춤 견적 요청하기</a>
+        <a class="btn btn-primary js-open-compare" href="logisin-quote-request.html" data-source="final">무료 견적 비교 받기</a>
         <a class="btn btn-outline-light js-open-diag" href="#free-diagnosis" data-source="final">무료 포장비 진단 받기</a>
       </div>
       <div class="final-contact">
@@ -1623,7 +1795,7 @@
 <nav class="mbar" id="mbar" aria-label="빠른 상담" hidden>
   <a class="mbar-btn mbar-kakao" href="https://pf.kakao.com/_JxexixiX/chat" target="_blank" rel="noopener" data-track="mbar_kakao"><svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.5 3 2 6.6 2 11c0 2.8 1.9 5.3 4.7 6.7l-1 3.7c-.1.3.3.6.6.4l4.4-2.9c.4 0 .9.1 1.3.1 5.5 0 10-3.6 10-8S17.5 3 12 3z"/></svg><span>카톡 상담</span></a>
   <button type="button" class="mbar-btn mbar-call js-open-callback" data-source="mbar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg><span>전화 요청</span></button>
-  <a class="mbar-btn mbar-quote" href="logisin-quote-request.html" data-track="mbar_quote"><span>견적 요청</span></a>
+  <a class="mbar-btn mbar-quote js-open-compare" href="logisin-quote-request.html" data-source="mbar"><span>견적 비교</span></a>
 </nav>
 <button class="chat-launcher" id="chatLauncher" aria-label="상담 채팅 열기">
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1682,7 +1854,7 @@
   <div class="lc-foot">
     <a href="https://pf.kakao.com/_JxexixiX/chat" target="_blank" rel="noopener" data-track="chat_foot_kakao">카톡으로 상담</a>
     <span aria-hidden="true">·</span>
-    <a href="logisin-quote-request.html" data-track="chat_foot_quote">견적 요청서 작성</a>
+    <a href="logisin-quote-request.html" class="js-open-compare" data-source="chat_foot">견적 비교 요청</a>
   </div>
 </div>
 
@@ -1992,12 +2164,13 @@
     const chatPanel = document.getElementById('chatPanel');
     if (!bar) return;
     const mq = window.matchMedia('(max-width: 640px)');
-    const anchor = document.querySelector('.hero-actions, .svc-hero');
+    const anchor = document.querySelector('.hero-pick, .hero-actions, .svc-hero');
     let pastHero = !anchor;
     function update(){
       const show = mq.matches && pastHero && (!chatPanel || chatPanel.hidden) && !document.body.classList.contains('modal-open');
       if (bar.hidden === show) bar.hidden = !show;
       if (document.body.classList.contains('has-mbar') !== show) document.body.classList.toggle('has-mbar', show);
+      document.body.classList.toggle('hero-in-view', mq.matches && !pastHero);
     }
     if (anchor && 'IntersectionObserver' in window) {
       new IntersectionObserver((entries) => {
@@ -2013,5 +2186,305 @@
   })();
 </script>
 
+<script>
+/* ---------- v8: 포장재 견적 비교 (단계형) ---------- */
+(function(){
+  const ENDPOINT = 'https://script.google.com/macros/s/AKfycbyFKaCzc929zybMWArWCyR358aFTiOlC74IHWYCx0xwiMu8dm3H5Fr49RVIQR5MkB2R7g/exec';
+  const KAKAO = 'https://pf.kakao.com/_JxexixiX/chat';
+  const STORE = 'logisin_compare_draft';
+  const ic = (d) => '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">' + d + '</svg>';
+  const ICONS = {
+    box: ic('<path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4V11M21 7v10l-9 4"/>'),
+    cold: ic('<path d="M12 2v20M4.2 6l15.6 12M19.8 6 4.2 18"/>'),
+    air: ic('<path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/>'),
+    bag: ic('<path d="M4 7h16v11H4V7z"/><path d="M4 7l8 6 8-6"/>'),
+    tape: ic('<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.2"/>'),
+    pallet: ic('<path d="M12 3 3 8l9 5 9-5-9-5z"/><path d="M3 13l9 5 9-5"/>'),
+    truck: ic('<path d="M2 7h11v9H2V7z"/><path d="M13 10h4l4 3v3h-8v-6z"/><circle cx="6" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/>')
+  };
+  const ITEMS = [
+    ['골판지 박스','box','택배박스 · 칼라박스'],
+    ['스티로폼박스 · 아이스팩','cold','EPS 박스 · 보냉 포장'],
+    ['에어캡 · 완충재','air','에어버블 · 에어캡'],
+    ['안전봉투 · OPP봉투','bag','택배봉투 · 비닐'],
+    ['테이프 · 랩 · 필름','tape','OPP 테이프 · 공업용 랩'],
+    ['파렛트','pallet','일회용 · 수출용'],
+    ['운송','truck','용차 · 화물 납품 운송']
+  ];
+  const STEPS = [
+    { key:'items', type:'multi', q:'어떤 포장재 견적이 필요하세요?', help:'여러 개 골라도 한 번에 비교해 드려요.' },
+    { key:'qty', type:'single', q:'한 번 주문할 때 수량은 어느 정도인가요?', help:'대략이면 충분해요. 품목별로 다르면 가장 많은 것 기준으로 골라주세요.',
+      opts:[['500개 미만','소량도 가능한 곳으로 찾아드려요'],['500 ~ 3,000개',''],['3,000 ~ 10,000개',''],['10,000개 이상','대량 단가로 비교해 드려요'],['아직 잘 모르겠어요','상담하며 같이 정해요']] },
+    { key:'cycle', type:'single', q:'얼마나 자주 구매하세요?', help:'정기 구매라면 단가를 더 낮출 수 있는 곳을 찾아드려요.',
+      opts:[['이번 한 번만',''],['매달 정기적으로',''],['성수기 · 시즌마다',''],['아직 검토 중이에요','']] },
+    { key:'when', type:'single', q:'언제까지 받아보셔야 하나요?', help:'납기에 맞출 수 있는 제조사만 골라 비교해요.',
+      opts:[['1주일 안에','급해요'],['2 ~ 4주 안에',''],['1개월 이후',''],['일단 가격만 비교해 볼래요','']] },
+    { key:'region', type:'single', q:'어디로 납품받으세요?', help:'배송비까지 포함해 비교해 드려요.',
+      opts:[['서울',''],['인천 · 경기',''],['충청 · 강원',''],['그 밖의 지역','']] },
+    { key:'detail', type:'detail', q:'원하는 조건이 더 있나요?', help:'없으면 건너뛰셔도 돼요. 담당자가 통화로 여쭤볼게요.',
+      chips:['최저 단가','빠른 납기','품질 · 안정 공급','소량 주문','로고 인쇄','샘플 먼저'] },
+    { key:'contact', type:'contact', q:'비교 견적을 받을 연락처를 알려주세요', help:'제조사 견적을 모아 평균 1일 이내에 연락드려요.' }
+  ];
+  const SUMMARY_LABEL = { qty:'수량', cycle:'주기', when:'납기', region:'지역' };
+
+  function load(){ try { return JSON.parse(localStorage.getItem(STORE) || 'null'); } catch(e){ return null; } }
+  function save(s){ try { localStorage.setItem(STORE, JSON.stringify(s)); } catch(e){} }
+  function clear(){ try { localStorage.removeItem(STORE); } catch(e){} }
+  function track(name, params){ if (typeof gtag === 'function') gtag('event', name, params || {}); }
+  function esc(t){ return String(t).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  function fmtPhone(raw){
+    let d = raw.replace(/[^0-9]/g,'').slice(0,11);
+    if (d.length < 4) return d;
+    if (d.startsWith('02')) {
+      if (d.length <= 5) return d.slice(0,2)+'-'+d.slice(2);
+      if (d.length <= 9) return d.slice(0,2)+'-'+d.slice(2,d.length-4)+'-'+d.slice(d.length-4);
+      return d.slice(0,2)+'-'+d.slice(2,6)+'-'+d.slice(6,10);
+    }
+    if (d.length <= 7) return d.slice(0,3)+'-'+d.slice(3);
+    if (d.length <= 10) return d.slice(0,3)+'-'+d.slice(3,6)+'-'+d.slice(6);
+    return d.slice(0,3)+'-'+d.slice(3,7)+'-'+d.slice(7,11);
+  }
+
+  function Wizard(mount, opts){
+    opts = opts || {};
+    const hasPrivacy = !!document.querySelector('.js-open-privacy');
+    const st = Object.assign({ step:0, items:[], qty:'', cycle:'', when:'', region:'', prefs:[], detail:'', manager:'', phone:'', company:'' }, load() || {});
+    let source = '';
+    mount.innerHTML =
+      '<div class="cw" role="' + (opts.inline ? 'region' : 'dialog') + '" aria-label="포장재 견적 비교">' +
+        '<div class="cw-top">' +
+          '<button type="button" class="cw-iconbtn cw-back" aria-label="이전"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>' +
+          '<div class="cw-progress"><i></i></div><span class="cw-count"></span>' +
+          '<button type="button" class="cw-iconbtn cw-close" aria-label="닫기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>' +
+        '</div>' +
+        '<div class="cw-body"></div>' +
+        '<div class="cw-foot"></div>' +
+      '</div>';
+    const root = mount.querySelector('.cw');
+    const body = root.querySelector('.cw-body');
+    const foot = root.querySelector('.cw-foot');
+    const bar = root.querySelector('.cw-progress i');
+    const count = root.querySelector('.cw-count');
+    const back = root.querySelector('.cw-back');
+
+    function render(){
+      if (st.step >= STEPS.length) return renderDone();
+      const s = STEPS[st.step];
+      bar.style.width = Math.round((st.step + 1) / STEPS.length * 100) + '%';
+      count.textContent = (st.step + 1) + '/' + STEPS.length;
+      back.hidden = st.step === 0;
+      let h = '<div class="cw-step"><h3 class="cw-q">' + s.q + '</h3><p class="cw-help">' + s.help + '</p>';
+      let f = '';
+      if (s.type === 'multi') {
+        h += '<div class="cw-opts cw-grid">' + ITEMS.map(([name, icon, sub]) =>
+          '<button type="button" class="cw-opt" data-v="' + esc(name) + '" aria-pressed="' + st.items.includes(name) + '"><span class="cw-ic">' + ICONS[icon] + '</span><span>' + name + '<span class="cw-sub">' + sub + '</span></span><span class="cw-check">✓</span></button>'
+        ).join('') + '</div>';
+        f = '<button type="button" class="cw-next" data-act="next"' + (st.items.length ? '' : ' disabled') + '>' + (st.items.length ? st.items.length + '개 선택 · 다음' : '품목을 골라주세요') + '</button><p class="cw-foot-note">30초면 끝나요 · 견적 비교 무료</p>';
+      } else if (s.type === 'single') {
+        h += '<div class="cw-opts">' + s.opts.map(([v, sub]) =>
+          '<button type="button" class="cw-opt" data-v="' + esc(v) + '" aria-pressed="' + (st[s.key] === v) + '"><span>' + v + (sub ? '<span class="cw-sub">' + sub + '</span>' : '') + '</span><span class="cw-check">✓</span></button>'
+        ).join('') + '</div>';
+        f = '<button type="button" class="cw-next" data-act="next"' + (st[s.key] ? '' : ' disabled') + '>다음</button>';
+      } else if (s.type === 'detail') {
+        h += '<span class="cw-label">가장 중요한 건 무엇인가요? <small>(여러 개 선택)</small></span><div class="cw-chips">' + s.chips.map(c =>
+          '<button type="button" class="cw-chip" data-v="' + esc(c) + '" aria-pressed="' + st.prefs.includes(c) + '">' + c + '</button>').join('') + '</div>' +
+          '<label class="cw-label" for="cwDetail">규격 · 재질 · 참고 사항 <small>(선택)</small></label>' +
+          '<textarea id="cwDetail" rows="4" placeholder="예) 택배박스 300×250×200 이중골&#10;지금 개당 450원에 쓰고 있어요">' + esc(st.detail) + '</textarea>';
+        f = '<button type="button" class="cw-skip" data-act="skip">건너뛰기</button><button type="button" class="cw-next" data-act="next">다음</button>';
+      } else if (s.type === 'contact') {
+        const tags = [st.items.join(', ')].concat(['qty','cycle','when','region'].filter(k => st[k]).map(k => st[k])).concat(st.prefs);
+        h += '<div class="cw-summary"><p class="cw-summary-t">내 비교 요청</p><ul>' + tags.filter(Boolean).map(t => '<li>' + esc(t) + '</li>').join('') + '</ul></div>' +
+          '<form class="cw-form" novalidate>' +
+          '<label class="cw-label" for="cwName">이름</label><input type="text" id="cwName" name="manager" autocomplete="name" required value="' + esc(st.manager) + '" />' +
+          '<label class="cw-label" for="cwPhone">연락처</label><input type="tel" id="cwPhone" name="phone" autocomplete="tel" inputmode="tel" required placeholder="010-0000-0000" value="' + esc(st.phone) + '" />' +
+          '<label class="cw-label" for="cwCompany">회사명 <small>(선택)</small></label><input type="text" id="cwCompany" name="company" autocomplete="organization" value="' + esc(st.company) + '" />' +
+          '<label class="cw-agree"><input type="checkbox" name="agree" required /><span>개인정보 수집·이용에 동의합니다 (필수)' + (hasPrivacy ? '<button type="button" class="js-open-privacy">보기</button>' : '') + '</span></label>' +
+          '<p class="cw-privacy">이름·연락처·회사명·요청 내용을 견적 비교와 상담에만 쓰고, 관련 법령에 따라 보관합니다.</p>' +
+          '<p class="cw-err" hidden></p></form>';
+        f = '<button type="button" class="cw-next" data-act="submit">무료 비교 견적 받기</button><p class="cw-foot-note">견적 비교 무료 · 거래 의무 없음</p>';
+      }
+      body.innerHTML = h + '</div>';
+      foot.innerHTML = f;
+      body.scrollTop = 0;
+      const ph = body.querySelector('#cwPhone');
+      if (ph) ph.addEventListener('input', () => { ph.value = fmtPhone(ph.value); });
+      save(st);
+      track('compare_step', { step: st.step + 1, step_name: s.key });
+    }
+
+    function renderDone(){
+      bar.style.width = '100%'; count.textContent = ''; back.hidden = true;
+      body.innerHTML = '<div class="cw-step cw-done"><div class="cw-done-ic">✓</div><h3>비교 요청이 접수되었어요</h3>' +
+        '<p>입력하신 조건으로 제휴 제조사 견적을 모아<br>비교해서 연락드릴게요.</p>' +
+        '<ol class="cw-timeline">' +
+          '<li class="is-now"><b>1</b><span>비교 요청 접수</span><em>지금</em></li>' +
+          '<li><b>2</b><span>제조사별 단가 · 납기 확인</span><em>평균 1일</em></li>' +
+          '<li><b>3</b><span>비교 결과 안내 · 원하는 곳 선택</span><em>거래 의무 없음</em></li>' +
+        '</ol>' +
+        '<a class="cw-kakao" href="' + KAKAO + '" target="_blank" rel="noopener" data-track="compare_done_kakao">지금 쓰는 포장재 사진이 있다면 카톡으로 보내주세요 →</a>' +
+        (opts.inline ? '<a class="cw-close-link" href="index.html">홈으로 돌아가기</a>' : '<button type="button" class="cw-close-link" data-act="close">닫기</button>') +
+        '</div>';
+      foot.innerHTML = '';
+      foot.hidden = true;
+    }
+
+    function next(){ st.step++; render(); }
+    function collectDetail(){ const t = body.querySelector('#cwDetail'); if (t) st.detail = t.value.trim(); }
+    function collectContact(){
+      const fm = body.querySelector('.cw-form'); if (!fm) return null;
+      st.manager = fm.manager.value.trim(); st.phone = fm.phone.value.trim(); st.company = fm.company.value.trim();
+      return fm;
+    }
+
+    function submit(btn){
+      const fm = collectContact();
+      const err = body.querySelector('.cw-err');
+      let msg = '';
+      if (!st.manager) msg = '이름을 입력해주세요.';
+      else if (st.phone.replace(/[^0-9]/g,'').length < 9) msg = '연락처를 정확히 입력해주세요.';
+      else if (!fm.agree.checked) msg = '개인정보 수집·이용에 동의해주세요.';
+      if (msg) { err.textContent = msg; err.hidden = false; return; }
+      err.hidden = true;
+      btn.disabled = true; btn.textContent = '보내는 중...';
+      const items = '[견적 비교] ' + st.items.join(', ') + (st.qty ? ' / 수량: ' + st.qty : '') + (st.detail ? '\n' + st.detail : '');
+      const payload = {
+        formType: 'quote', manager: st.manager, phone: st.phone, company: st.company,
+        position: '', site: '', items: items, shipping: '',
+        purpose: st.cycle, dueDate: st.when, address: st.region,
+        currentSupplier: '', currentPrice: '',
+        etc: (st.prefs.length ? '중요: ' + st.prefs.join(', ') : '') + (source ? (st.prefs.length ? ' · ' : '') + '유입: ' + source : '')
+      };
+      fetch(ENDPOINT, { method:'POST', mode:'no-cors', headers:{ 'Content-Type':'text/plain;charset=utf-8' }, body: JSON.stringify(payload) })
+        .catch(() => {})
+        .finally(() => {
+          track('generate_lead', { form_type: 'compare', source: source });
+          clear();
+          st.step = STEPS.length;
+          render();
+        });
+    }
+
+    root.addEventListener('click', (e) => {
+      const s = STEPS[st.step];
+      const opt = e.target.closest('.cw-opt');
+      const chip = e.target.closest('.cw-chip');
+      const act = e.target.closest('[data-act]');
+      if (opt && s) {
+        const v = opt.dataset.v;
+        if (s.type === 'multi') {
+          st.items = st.items.includes(v) ? st.items.filter(x => x !== v) : st.items.concat(v);
+          opt.setAttribute('aria-pressed', st.items.includes(v));
+          const nb = foot.querySelector('.cw-next');
+          nb.disabled = !st.items.length;
+          nb.textContent = st.items.length ? st.items.length + '개 선택 · 다음' : '품목을 골라주세요';
+          save(st);
+        } else {
+          st[s.key] = v;
+          body.querySelectorAll('.cw-opt').forEach(o => o.setAttribute('aria-pressed', o === opt));
+          foot.querySelector('.cw-next').disabled = false;
+          setTimeout(next, 220);
+        }
+        return;
+      }
+      if (chip) {
+        const v = chip.dataset.v;
+        st.prefs = st.prefs.includes(v) ? st.prefs.filter(x => x !== v) : st.prefs.concat(v);
+        chip.setAttribute('aria-pressed', st.prefs.includes(v));
+        return;
+      }
+      if (e.target.closest('.cw-back')) { collectDetail(); collectContact(); st.step = Math.max(0, st.step - 1); render(); return; }
+      if (e.target.closest('.cw-close')) { if (opts.onClose) opts.onClose(); return; }
+      if (act) {
+        const a = act.dataset.act;
+        if (a === 'next') { collectDetail(); next(); }
+        else if (a === 'skip') { st.detail = ''; st.prefs = []; next(); }
+        else if (a === 'submit') submit(act);
+        else if (a === 'close' && opts.onClose) opts.onClose();
+      }
+    });
+
+    return {
+      start(o){
+        o = o || {};
+        source = o.source || '';
+        if (st.step >= STEPS.length) {
+          Object.assign(st, { step:0, items:[], qty:'', cycle:'', when:'', region:'', prefs:[], detail:'' });
+        }
+        foot.hidden = false;
+        if (o.items && o.items.length) {
+          st.items = Array.from(new Set(o.items));
+          st.step = o.skipItems ? 1 : 0;
+        }
+        render();
+        track('compare_open', { source: source });
+      }
+    };
+  }
+
+  /* 모달 (메인 · 서비스 페이지) */
+  let modal = null, wiz = null, lastFocus = null;
+  function closeModal(){
+    if (!modal) return;
+    modal.hidden = true;
+    document.body.classList.remove('cw-lock', 'modal-open');
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  function openModal(o){
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.className = 'cw-modal'; modal.hidden = true;
+      document.body.appendChild(modal);
+      wiz = Wizard(modal, { onClose: closeModal });
+      modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal && !modal.hidden) closeModal(); });
+    }
+    const chat = document.getElementById('chatPanel');
+    if (chat && !chat.hidden) { const c = document.getElementById('lcClose'); if (c) c.click(); }
+    const nav = document.getElementById('mobileNav');
+    if (nav && !nav.hidden) { const c = document.getElementById('mobileNavClose'); if (c) c.click(); }
+    lastFocus = document.activeElement;
+    wiz.start(o);
+    modal.hidden = false;
+    document.body.classList.add('cw-lock', 'modal-open');
+    setTimeout(() => { const f = modal.querySelector('.cw-opt, .cw-next'); if (f) f.focus({ preventScroll:true }); }, 60);
+  }
+
+  document.addEventListener('click', (e) => {
+    const el = e.target.closest('.js-open-compare');
+    if (!el) return;
+    e.preventDefault();
+    let items = [];
+    const scope = el.closest('[data-compare-scope]');
+    if (el.dataset.items) items = el.dataset.items.split('|');
+    else if (scope) items = Array.from(scope.querySelectorAll('.hp-tile[aria-pressed="true"]')).map(t => t.dataset.item);
+    openModal({ items: items, skipItems: items.length > 0 && el.dataset.skip === '1', source: el.dataset.source || '' });
+  });
+
+  /* 첫 화면 품목 타일: 누르면 선택, 버튼 문구가 바뀜 */
+  document.querySelectorAll('[data-compare-scope]').forEach((scope) => {
+    const go = scope.querySelector('.hp-go');
+    const label = go && go.querySelector('.hp-go-label');
+    scope.addEventListener('click', (e) => {
+      const t = e.target.closest('.hp-tile');
+      if (!t) return;
+      t.setAttribute('aria-pressed', t.getAttribute('aria-pressed') !== 'true');
+      const n = scope.querySelectorAll('.hp-tile[aria-pressed="true"]').length;
+      if (label) label.textContent = n ? n + '개 품목 · 무료 견적 비교 시작' : '무료 견적 비교 시작';
+      if (go) { go.dataset.skip = n ? '1' : '0'; go.classList.toggle('is-ready', n > 0); }
+    });
+  });
+
+  /* 견적 비교 페이지: 페이지 안에 바로 표시 */
+  const inline = document.getElementById('cwInline');
+  if (inline) {
+    const w = Wizard(inline, { inline: true });
+    const q = new URLSearchParams(location.search).get('item');
+    const match = q ? ITEMS.map(i => i[0]).filter(n => n.indexOf(q) === 0 || n.replace(/\s/g,'').indexOf(q.replace(/\s/g,'')) >= 0) : [];
+    w.start({ items: match, source: 'page' });
+  }
+
+  window.LogisCompare = { open: openModal };
+})();
+</script>
 </body>
 </html>
