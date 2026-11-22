@@ -588,7 +588,7 @@
     <div class="wrap" style="max-width:640px;">
       <p class="section-label" style="color:var(--tape);">무료 견적 비교</p>
       <h1 style="font-size:clamp(1.5rem,3.2vw,2.1rem); font-weight:700; margin:0 0 12px; letter-spacing:-0.01em; line-height:1.35;">포장재 견적, 여러 제조사 비교</h1>
-      <p style="color:#C7CCD3; font-size:0.96rem; margin:0; line-height:1.6;">조건만 고르면 제휴 제조사 견적을 모아 비교해 드려요. 비교는 무료, 선택은 자유입니다.</p>
+      <p style="color:#C7CCD3; font-size:0.96rem; margin:0; line-height:1.6;">조건만 고르면 여러 제조사 단가를 비교해 맞는 곳을 제안해 드려요. 비교는 무료, 거래 의무는 없어요.</p>
     </div>
   </section>
 
@@ -649,7 +649,7 @@
       opts:[['서울',''],['인천 · 경기',''],['충청 · 강원',''],['그 밖의 지역','']] },
     { key:'detail', type:'detail', q:'원하는 조건이 더 있나요?', help:'없으면 건너뛰셔도 돼요. 담당자가 통화로 여쭤볼게요.',
       chips:['최저 단가','빠른 납기','품질 · 안정 공급','소량 주문','로고 인쇄','샘플 먼저'] },
-    { key:'contact', type:'contact', q:'비교 견적을 받을 연락처를 알려주세요', help:'제조사 견적을 모아 평균 1일 이내에 연락드려요.' }
+    { key:'contact', type:'contact', q:'비교 견적을 받을 연락처를 알려주세요', help:'여러 제조사 단가를 비교해 평균 1일 이내에 제안드려요.' }
   ];
   const SUMMARY_LABEL = { qty:'수량', cycle:'주기', when:'납기', region:'지역' };
 
@@ -741,11 +741,11 @@
     function renderDone(){
       bar.style.width = '100%'; count.textContent = ''; back.hidden = true;
       body.innerHTML = '<div class="cw-step cw-done"><div class="cw-done-ic">✓</div><h3>비교 요청이 접수되었어요</h3>' +
-        '<p>입력하신 조건으로 제휴 제조사 견적을 모아<br>비교해서 연락드릴게요.</p>' +
+        '<p>여러 제조사에서 단가를 받아 비교한 뒤,<br>조건에 가장 맞는 제조사를 제안드릴게요.</p>' +
         '<ol class="cw-timeline">' +
           '<li class="is-now"><b>1</b><span>비교 요청 접수</span><em>지금</em></li>' +
-          '<li><b>2</b><span>제조사별 단가 · 납기 확인</span><em>평균 1일</em></li>' +
-          '<li><b>3</b><span>비교 결과 안내 · 원하는 곳 선택</span><em>거래 의무 없음</em></li>' +
+          '<li><b>2</b><span>여러 제조사 단가 · 납기 비교</span><em>평균 1일</em></li>' +
+          '<li><b>3</b><span>맞춤 제조사 제안</span><em>거래 의무 없음</em></li>' +
         '</ol>' +
         '<a class="cw-kakao" href="' + KAKAO + '" target="_blank" rel="noopener" data-track="compare_done_kakao">지금 쓰는 포장재 사진이 있다면 카톡으로 보내주세요 →</a>' +
         (opts.inline ? '<a class="cw-close-link" href="index.html">홈으로 돌아가기</a>' : '<button type="button" class="cw-close-link" data-act="close">닫기</button>') +
